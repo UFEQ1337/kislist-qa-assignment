@@ -1,0 +1,29 @@
+{
+  "name": "kislist-qa-assignment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zadanie rekrutacyjne QA - testy systemu powiadomień o komentarzach w KIS List (Playwright + TypeScript)",
+  "scripts": {
+    "test": "playwright test",
+    "test:setup": "playwright test --project=setup",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UFEQ1337/kislist-qa-assignment.git"
+  },
+  "author": "UFEQ1337",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.3",
+    "dotenv": "^18.0.4",
+    "typescript": "^7.0.2"
+  }
+}

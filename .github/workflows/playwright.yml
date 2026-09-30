@@ -1,0 +1,38 @@
+name: E2E - powiadomienia o komentarzach
+
+# tylko ręcznie - testy lecą na produkcyjnym KIS List, dane logowania w GitHub Secrets
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE_URL: ${{ vars.BASE_URL || 'https://kislist.com' }}
+      LIST_URL: ${{ secrets.LIST_URL }}
+      PIOTR_EMAIL: ${{ secrets.PIOTR_EMAIL }}
+      PIOTR_PASSWORD: ${{ secrets.PIOTR_PASSWORD }}
+      ANNA_EMAIL: ${{ secrets.ANNA_EMAIL }}
+      ANNA_PASSWORD: ${{ secrets.ANNA_PASSWORD }}
+      MARCIN_EMAIL: ${{ secrets.MARCIN_EMAIL }}
+      MARCIN_PASSWORD: ${{ secrets.MARCIN_PASSWORD }}
+      MICHALINA_EMAIL: ${{ secrets.MICHALINA_EMAIL }}
+      MICHALINA_PASSWORD: ${{ secrets.MICHALINA_PASSWORD }}
+      KLIENT_EMAIL: ${{ secrets.KLIENT_EMAIL }}
+      KLIENT_PASSWORD: ${{ secrets.KLIENT_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
